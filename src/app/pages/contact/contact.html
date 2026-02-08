@@ -1,0 +1,124 @@
+<section class="contact-hero">
+  <div class="contact-hero__content container">
+    <p class="contact-kicker">ET FIT / KONTAKT</p>
+    <h1 class="contact-title">SPRICH MIT UNS</h1>
+    <p class="contact-subtitle">
+      Fragen zu Mitgliedschaft, Probetag oder 24/7 Zugang? Schreib uns oder komm vorbei.
+    </p>
+    <div class="contact-quick">
+      <a class="contact-quick__item" href="tel:+434245123456">
+        <span class="label">Telefon</span>
+        <span class="value">+43 4245 123 456</span>
+      </a>
+      <a class="contact-quick__item" href="mailto:office@et-fit.at">
+        <span class="label">E-Mail</span>
+        <span class="value">office@et-fit.at</span>
+      </a>
+      <div class="contact-quick__item">
+        <span class="label">Adresse</span>
+        <span class="value">Kreuzner Strasse 537, 9710 Feistritz an der Drau</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-main container">
+  <div class="contact-card contact-info">
+    <div class="card-header">
+      <p class="card-kicker">HIER FINDEST DU UNS</p>
+      <h2 class="card-title">Adresse & Oeffnungszeiten</h2>
+    </div>
+    <ul class="info-list">
+      <li>
+        <span class="info-label">Adresse</span>
+        <span class="info-value">Kreuzner Strasse 537<br>9710 Feistritz an der Drau</span>
+      </li>
+      <li>
+        <span class="info-label">Oeffnungszeiten</span>
+        <span class="info-value">24/7 Zugang mit Chip<br>Personal vor Ort: Mo-Fr 10-19 Uhr</span>
+      </li>
+      <li>
+        <span class="info-label">Telefon</span>
+        <span class="info-value">+43 4245 123 456</span>
+      </li>
+      <li>
+        <span class="info-label">E-Mail</span>
+        <span class="info-value">office@et-fit.at</span>
+      </li>
+    </ul>
+    <div class="info-cta">
+      <a class="cta-button" href="https://www.google.com/maps?q=Kreuzner%20Strasse%20537%2C%209710%20Feistritz%20an%20der%20Drau" target="_blank" rel="noreferrer">Route planen</a>
+    </div>
+  </div>
+
+  <div class="contact-card contact-form">
+    <div class="card-header">
+      <p class="card-kicker">DEIN DIREKTER DRAHT</p>
+      <h2 class="card-title">Schreib uns eine Nachricht</h2>
+    </div>
+    <form
+      class="form-grid"
+      name="contact"
+      method="POST"
+      action="/contact"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      (submit)="onSubmit($event)">
+      <input type="hidden" name="form-name" value="contact">
+      <div class="sr-only">
+        <label>
+          Nicht ausfuellen
+          <input name="bot-field" type="text" autocomplete="off">
+        </label>
+      </div>
+      <div class="field">
+        <label for="contact-name">Name</label>
+        <input id="contact-name" name="name" type="text" placeholder="Dein Name" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="contact-email">E-Mail</label>
+        <input id="contact-email" name="email" type="email" placeholder="name@domain.at" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="contact-phone">Telefon</label>
+        <input id="contact-phone" name="phone" type="tel" placeholder="Optional" autocomplete="tel">
+      </div>
+      <div class="field field-full">
+        <label for="contact-message">Nachricht</label>
+        <textarea id="contact-message" name="message" rows="5" placeholder="Worum geht es?" required></textarea>
+      </div>
+      <div class="field field-full">
+        <button class="cta-button" type="submit" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Senden...' : 'Anfrage senden' }}
+        </button>
+        <p class="form-note">Wir melden uns in der Regel innerhalb von 24 Stunden.</p>
+        <p *ngIf="formSuccess" class="form-status form-status--success" role="status">
+          Danke! Deine Nachricht wurde gesendet.
+        </p>
+        <p *ngIf="formError" class="form-status form-status--error" role="status">
+          {{ errorMessage }}
+        </p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="contact-map">
+  <div class="contact-map__frame">
+    <iframe
+      title="ET FIT Standort"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps?q=Kreuzner%20Strasse%20537%2C%209710%20Feistritz%20an%20der%20Drau&output=embed">
+    </iframe>
+  </div>
+  <div class="contact-map__overlay">
+    <div class="overlay-content">
+      <p class="card-kicker">ANKOMMEN</p>
+      <h3 class="card-title">Parkplaetze direkt vor dem Eingang</h3>
+      <p class="overlay-text">
+        Schnell von der Hauptstrasse erreichbar. Nachts beleuchtet, Zugang mit Chip.
+      </p>
+    </div>
+  </div>
+</section>

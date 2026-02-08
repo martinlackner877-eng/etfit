@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;500;800&family=Teko:wght@300;600&display=swap');
+
 :root {
   --bg-color: #0a0a0a;
-  --text-color: #ffffff;
-  --accent-color: #E35D25;
-  --gray-color: #888888;
+  --primary-accent: #ED440D;
+  --secondary: #324368;
+  --text-light: #ffffff;
+  --text-gray: #d0d0d0;
   --container-width: 1200px;
 }
 
@@ -12,10 +15,75 @@
   box-sizing: border-box;
 }
 
+html,
 body {
-  font-family: "Kanit", sans-serif;
+  margin: 0;
+  padding: 0;
   background-color: var(--bg-color);
-  color: var(--text-color);
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-light);
   line-height: 1.6;
   overflow-x: hidden;
+  position: relative;
 }
+
+/* ========== GLOBAL NOISE OVERLAY ========== */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3CfeColorMatrix type='saturate' values='0.3' /%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.05'/%3E%3Csvg%3E");
+  background-size: 100px 100px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+}
+
+/* ========== SCROLLBAR STYLING ========== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(10, 10, 10, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-accent);
+  border-radius: 5px;
+
+  &:hover {
+    background: mix(#ED440D, white, 85%);
+  }
+}
+
+/* ========== UTILITY CLASSES ========== */
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+

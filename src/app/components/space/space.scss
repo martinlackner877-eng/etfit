@@ -1,0 +1,145 @@
+.space-section {
+  position: relative;
+  width: 100%;
+  background-color: #0a0a0a;
+  overflow: hidden;
+}
+
+/* === PHASE 1: INTRO NUMBERS === */
+.intro-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100vh;
+  display: flex; justify-content: center; align-items: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.intro-stat {
+  position: absolute;
+  text-align: center;
+  opacity: 0;
+
+  .giant-number {
+    display: block;
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(8rem, 25vw, 30rem);
+    line-height: 0.8;
+    color: transparent;
+    -webkit-text-stroke: 2px #ED440D;
+    filter: drop-shadow(0 0 20px rgba(237,68,13, 0.4));
+  }
+
+  .giant-label {
+    display: block;
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    letter-spacing: 10px;
+    color: white;
+    text-transform: uppercase;
+  }
+}
+
+/* === PHASE 2: HORIZONTAL SCROLL === */
+.horizontal-outer {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+
+  /* WICHTIG: Startet unsichtbar für den "Void"-Effekt */
+  opacity: 0;
+}
+
+.horizontal-inner {
+  display: flex;
+  width: 300%;
+  height: 100%;
+  will-change: transform;
+}
+
+.panel {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0 5vw;
+}
+
+.panel-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1600px;
+  gap: 5vw;
+
+  &.reverse { flex-direction: row-reverse; }
+}
+
+.panel-text {
+  flex: 1;
+  z-index: 2;
+
+  .outline-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(4rem, 12vw, 15rem);
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255,255,255,0.1);
+    position: absolute;
+    top: 50%; left: 0;
+    transform: translateY(-50%);
+    z-index: -1;
+    white-space: nowrap;
+    opacity: 0.5;
+  }
+
+  h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    color: #ED440D;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    color: #ccc;
+    line-height: 1.6;
+    max-width: 500px;
+    background: rgba(10,10,10,0.8);
+    padding: 1rem;
+    border-left: 3px solid #ED440D;
+  }
+}
+
+.panel-visual {
+  flex: 1.5;
+  height: 60vh;
+  position: relative;
+
+  .img-mask {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    position: relative;
+    clip-path: polygon(10% 0, 100% 0, 100% 90%, 0% 100%);
+
+    img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: scale(1.2);
+    }
+
+    &::after {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(45deg, rgba(237,68,13,0.2), transparent);
+    }
+  }
+}
+
+@media(max-width: 768px) {
+  .panel-content { flex-direction: column !important; justify-content: center; }
+  .panel-visual { width: 100%; height: 40vh; }
+  .panel-text .outline-title { display: none; }
+}

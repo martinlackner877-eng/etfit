@@ -1,0 +1,55 @@
+<header class="navbar-header">
+  <div class="nav-logo">
+    <img src="assets/mainlogo.svg" alt="ET FIT Logo" loading="lazy">
+  </div>
+
+  <button class="menu-trigger" (click)="toggleMenu()" [class.is-active]="isOpen">
+    <span class="trigger-text">MENU</span>
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+    </div>
+  </button>
+</header>
+
+<div class="menu-overlay" [class.is-open]="isOpen">
+  <div class="overlay-bg"></div>
+
+  <nav class="menu-nav">
+    <ul class="menu-list">
+
+      <li class="menu-item" (mouseenter)="onHover($event)" (mouseleave)="onLeave($event)">
+        <span class="item-number">01</span>
+        <a [routerLink]="['/']" fragment="space" (click)="toggleMenu()">THE SPACE</a>
+        <div class="item-line"></div>
+      </li>
+
+      <li class="menu-item" (mouseenter)="onHover($event)" (mouseleave)="onLeave($event)">
+        <span class="item-number">02</span>
+        <a [routerLink]="['/']" fragment="membership" (click)="toggleMenu()">MEMBERSHIP</a>
+        <div class="item-line"></div>
+      </li>
+
+      <li class="menu-item" (mouseenter)="onHover($event)" (mouseleave)="onLeave($event)">
+        <span class="item-number">03</span>
+        <a [routerLink]="['/']" fragment="manifesto" (click)="toggleMenu()">MANIFESTO</a>
+        <div class="item-line"></div>
+      </li>
+
+      <li class="menu-item" (mouseenter)="onHover($event)" (mouseleave)="onLeave($event)">
+        <span class="item-number">04</span>
+        <a [routerLink]="['/contact']" (click)="toggleMenu()">CONTACT</a>
+        <div class="item-line"></div>
+      </li>
+
+    </ul>
+  </nav>
+
+  <div class="menu-footer">
+    <span>SYSTEM STATUS: ONLINE</span>
+    <div class="socials">
+      <a href="#">IG</a>
+      <a href="#">FB</a>
+    </div>
+  </div>
+</div>

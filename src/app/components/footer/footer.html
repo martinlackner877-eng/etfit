@@ -1,0 +1,63 @@
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Main Footer Content -->
+    <div class="footer-content">
+      <!-- Left Column: Brand -->
+      <div class="footer-column">
+        <div class="footer-brand">
+          <h3 class="footer-logo"> <img src="assets/mainlogo.svg" alt="ET FIT 24/7 Logo" loading="lazy" style="height: 60px;" /></h3>
+          <p class="footer-tagline">DEIN GYM. DEIN ZIEL.</p>
+        </div>
+      </div>
+
+      <!-- Middle Column: Navigate -->
+      <div class="footer-column">
+        <h4 class="footer-column-title">LINKS</h4>
+        <ul class="footer-links">
+          <li *ngFor="let link of navigationLinks">
+            <a [routerLink]="link.route" [fragment]="link.fragment">{{ link.label }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right-Middle Column: Contact -->
+      <div class="footer-column">
+        <h4 class="footer-column-title">KONTAKT</h4>
+        <ul class="footer-contact">
+          <li *ngFor="let info of contactInfo" [class.address]="info.type === 'address'">
+            {{ info.label }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right Column: Social -->
+      <div class="footer-column">
+        <h4 class="footer-column-title">FOLGE UNS</h4>
+        <div class="footer-social">
+          <a *ngFor="let social of socialLinks" [href]="social.href" [title]="social.label" class="social-icon">
+            <svg *ngIf="social.icon === 'instagram'" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2m0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6m6-2a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+            </svg>
+            <svg *ngIf="social.icon === 'facebook'" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.39v-1.2h-2.84v8.37h2.84v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.84M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77"/>
+            </svg>
+            <svg *ngIf="social.icon === 'twitter'" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M22.46 6c-.87.39-1.8.65-2.77.77 1-.6 1.76-1.55 2.12-2.68-.93.55-1.96.95-3.06 1.17-.88-.94-2.13-1.53-3.51-1.53-2.66 0-4.81 2.16-4.81 4.81 0 .38.04.75.13 1.1-4-.2-7.58-2.14-9.96-5.08-.42.73-.66 1.57-.66 2.46 0 1.67.85 3.14 2.14 4.01-.79-.03-1.54-.24-2.19-.6v.06c0 2.33 1.66 4.28 3.86 4.72-.4.11-.83.17-1.27.17-.31 0-.62-.03-.92-.08.62 1.92 2.41 3.32 4.53 3.36-1.65 1.29-3.73 2.06-5.99 2.06-.39 0-.77-.02-1.15-.07 2.14 1.37 4.69 2.17 7.39 2.17 8.87 0 13.71-7.35 13.71-13.71 0-.21 0-.42-.01-.62.94-.68 1.76-1.53 2.41-2.5"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <p class="footer-copyright">© {{ currentYear }} ET FIT. Alle Rechte vorbehalten.</p>
+      <div class="footer-bottom-links">
+        <a *ngFor="let link of footerLinks; let last = last" [href]="link.href">
+          {{ link.label }}
+          <span *ngIf="!last" class="divider">·</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,78 @@
+/* Importiere Schriftart falls noch nicht global geschehen */
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.manifesto-section {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Startet als normaler Viewport */
+  background-color: #0a0a0a;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spark-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.content-wrapper {
+  position: relative; /* KEIN sticky mehr! GSAP macht das. */
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-stack {
+  position: relative;
+  text-align: center;
+  mix-blend-mode: lighten; /* Lässt Funken durch dunkle Teile scheinen */
+}
+
+.headline {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(60px, 14vw, 220px);
+  line-height: 0.9;
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: -2px;
+  user-select: none;
+}
+
+/* Ebene 1: Die Outline (Stahl-Look) */
+.outline {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.1);
+  opacity: 0.5;
+}
+
+/* Ebene 2: Der glühende Kern */
+.filled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: #ED440D;
+
+  /* Startzustand: Komplett versteckt (Clip-Path) */
+  clip-path: inset(100% 0% 0% 0%);
+
+  /* Der Glüheffekt */
+  filter: drop-shadow(0 0 5px rgba(237, 69, 13, 0.575));
+
+  /* Eine leichte Pulsier-Animation für das Glühen */
+  animation: magma-pulse 3s infinite ease-in-out;
+}
+
+@keyframes magma-pulse {
+  0%, 100% { filter: drop-shadow(0 0 15px rgba(237, 69, 13, 0.6)); }
+  50% { filter: drop-shadow(0 0 30px rgba(237, 69, 13, 1)); }
+}

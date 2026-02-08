@@ -1,0 +1,187 @@
+$orange: #ED440D;
+$dark-bg: #0a0a0a;
+$card-bg: #121212; /* Etwas heller als der Hintergrund für Tiefe */
+
+.membership-section {
+  background-color: $dark-bg;
+  /* Subtiler Radial-Gradient für mehr Tiefe im Hintergrund */
+  background-image: radial-gradient(circle at center top, rgba($orange, 0.15) 0%, rgba($dark-bg, 1) 60%);
+  padding: 6rem 2rem;
+  color: white;
+  overflow: hidden; /* Wichtig für 3D Effekte */
+}
+
+/* Header Styles */
+.section-header { text-align: center; margin-bottom: 5rem; }
+.headline { font-family: 'Anton', sans-serif; font-size: clamp(3rem, 6vw, 5rem); text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 1px; }
+.subline { font-family: 'Montserrat', sans-serif; color: #888; letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem; font-weight: 500; }
+.header-accent { width: 80px; height: 3px; background: $orange; margin: 1.5rem auto; }
+
+
+/* ============ CARDS CONTAINER ============ */
+.plans-container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch; /* Alle gleich hoch */
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  perspective: 1000px; /* Aktiviert 3D-Raum für die Kinder */
+  padding-top: 20px; /* Platz für den Hover-Effekt nach oben */
+
+  @media (max-width: 1024px) { flex-wrap: wrap; }
+}
+
+
+/* ============ BASE CARD STYLES ============ */
+.plan-card {
+  background-color: $card-bg;
+  /* Sehr subtiler, feiner Rahmen */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 3.5rem 2.5rem;
+  flex: 1;
+  min-width: 300px;
+  max-width: 380px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Weiches Easing */
+  transform-style: preserve-3d; /* Wichtig für 3D Kinder-Elemente */
+  z-index: 1;
+  overflow: hidden; /* Für den Lichtreflex */
+
+  /* === HOVER EFFECT: 3D LIFT & SHINE === */
+  &:hover {
+    transform: translateY(-12px) translateZ(20px); /* Hebt sich ab */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    border-color: rgba(255, 255, 255, 0.2);
+
+    /* Der metallische Lichtreflex */
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 50%,
+        transparent 100%
+      );
+      transform: skewX(-25deg);
+      animation: sheen-pass 0.8s ease-in-out forwards;
+      pointer-events: none;
+    }
+  }
+}
+
+@keyframes sheen-pass {
+  from { left: -100%; }
+  to { left: 150%; }
+}
+
+/* Karten Inhalte */
+.plan-name { font-family: 'Anton', sans-serif; font-size: 2.2rem; margin-bottom: 0.5rem; letter-spacing: 1px; }
+.plan-desc { color: #888; margin-bottom: 2.5rem; font-size: 0.95rem; font-family: 'Montserrat', sans-serif; }
+
+.plan-price {
+  display: flex; align-items: flex-start; margin-bottom: 3.5rem;
+  .amount { font-family: 'Anton', sans-serif; font-size: 5rem; line-height: 1; }
+  .currency { font-size: 1.8rem; margin-top: 0.6rem; margin-left: 5px; font-family: 'Teko', sans-serif; font-weight: 300;}
+  .period { color: #888; align-self: flex-end; margin-left: 10px; margin-bottom: 10px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; }
+}
+
+.plan-features {
+  list-style: none; padding: 0; margin-bottom: 3.5rem; text-align: left;
+  li {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 1.1rem; color: #ccc; font-size: 1rem; font-family: 'Montserrat', sans-serif;
+    .check-icon { width: 18px; height: 18px; opacity: 0.7; }
+    /* Orange Checkmarks für Pro - müssen extra eingefärbt sein */
+    .orange-check { opacity: 1; filter: drop-shadow(0 0 3px rgba($orange, 0.5)); }
+  }
+}
+
+/* Buttons */
+.select-btn {
+  width: 100%; padding: 1.1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white; font-family: 'Teko', sans-serif; font-size: 1.2rem; letter-spacing: 2px; cursor: pointer;
+  transition: all 0.3s ease; text-transform: uppercase;
+  &:hover { background: white; color: $dark-bg; border-color: white; }
+}
+
+
+/* ============ PRO CARD (CENTER HERO) ============ */
+.plan-card.pro {
+  z-index: 2; /* Liegt über den anderen */
+  transform: scale(1.05); /* Standardmäßig etwas größer */
+  border: 1px solid rgba($orange, 0.4);
+  background-color: rgba($card-bg, 0.8); /* Leicht transparent für den Glow */
+
+  /* Intensives Glühen wie in Bild 1 */
+  box-shadow:
+    0 0 40px rgba($orange, 0.15),
+    inset 0 0 30px rgba($orange, 0.05);
+
+  /* Der orange Button */
+  .pro-btn {
+    background: $orange; border-color: $orange;
+    box-shadow: 0 5px 20px rgba($orange, 0.3);
+    &:hover { background: lighten($orange, 8%); box-shadow: 0 5px 30px rgba($orange, 0.5); color: white;}
+  }
+
+  .amount, .currency { color: $orange; text-shadow: 0 0 20px rgba($orange, 0.4); }
+
+  /* PRO HOVER: Noch intensiver */
+  &:hover {
+    transform: scale(1.05) translateY(-12px) translateZ(30px);
+    box-shadow:
+      0 0 60px rgba($orange, 0.3),
+      0 30px 70px rgba(0,0,0,0.6);
+    border-color: rgba($orange, 0.8);
+
+    /* Der Lichtreflex ist hier orange */
+    &::after {
+      background: linear-gradient(to right, transparent 0%, rgba($orange, 0.3) 50%, transparent 100%);
+    }
+  }
+}
+
+/* Das "MOST POPULAR" Badge - hängend wie in Bild 1 */
+.most-popular-badge {
+  position: absolute;
+  top: -14px; /* Hängt über den Rand */
+  right: 2.5rem;
+  background: $orange;
+  color: white;
+  font-family: 'Teko', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  padding: 0.5rem 1.8rem;
+  text-transform: uppercase;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  z-index: 10;
+  /* Kleiner 3D Effekt für das Badge selbst */
+  transform: translateZ(10px);
+  font-weight: 600;
+}
+
+/* Pro Glow Hintergrund Element (optional, für mehr Atmosphäre) */
+.pro-glow {
+  position: absolute; top: 50%; left: 50%; width: 120%; height: 120%;
+  transform: translate(-50%, -50%) translateZ(-1px); /* Liegt hinter der Karte */
+  background: radial-gradient(circle, rgba($orange, 0.2) 0%, transparent 65%);
+  pointer-events: none; opacity: 0.6; transition: opacity 0.4s ease;
+}
+.plan-card.pro:hover .pro-glow { opacity: 0.9; }
+
+/* Sicherheits-CSS: Elemente sind sichtbar, bis GSAP übernimmt */
+.plan-card, .headline, .subline, .header-accent, .most-popular-badge {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* NOTFALL CSS - Wenn das hier drin ist, MUSS man was sehen */
+/* Wenn du das siehst, funktioniert HTML/CSS, aber die Animation spinnt */
+//.plan-card, .headline, .subline, .header-accent, .most-popular-badge {
+//  opacity: 1 !important;
+//  visibility: visible !important;
+//  transform: none !important;
+//}
