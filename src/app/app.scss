@@ -244,3 +244,114 @@ footer a:hover {
 
 
 
+/* --- COMING SOON VORHANG --- */
+.maintenance-curtain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* Höher als Cookie Banner (9999) und Navbar (100) */
+  z-index: 100000;
+  background-color: #0a0a0a;
+  background-image:
+    radial-gradient(circle at center, rgba(30, 30, 30, 1) 0%, #000000 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+
+  /* Verhindert Scrollen der Seite dahinter */
+  overscroll-behavior: none;
+}
+
+.curtain-content {
+  max-width: 600px;
+  width: 100%;
+  animation: fadeIn 1s ease-out;
+}
+
+.status-line {
+  font-family: 'Teko', sans-serif;
+  color: #ED440D;
+  letter-spacing: 3px;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(237, 68, 13, 0.3);
+  padding: 0.5rem 1rem;
+  background: rgba(237, 68, 13, 0.1);
+  border-radius: 4px;
+}
+
+.blinking-dot {
+  width: 8px;
+  height: 8px;
+  background: #ED440D;
+  border-radius: 50%;
+  animation: blink 1s infinite;
+  box-shadow: 0 0 10px #ED440D;
+}
+
+.curtain-title {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(3rem, 10vw, 6rem);
+  color: white;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+
+  .highlight {
+    color: transparent;
+    -webkit-text-stroke: 2px #ED440D; /* Outline Look */
+    display: block;
+    margin-top: 0.5rem;
+  }
+}
+
+.curtain-sub {
+  font-family: 'Montserrat', sans-serif;
+  color: #888;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+
+/* Loading Bar Animation */
+.loading-bar-container {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.loading-bar {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  width: 40%;
+  background: #ED440D;
+  box-shadow: 0 0 15px #ED440D;
+  animation: loading 2s infinite ease-in-out;
+}
+
+/* Animationen */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes loading {
+  0% { left: -40%; }
+  100% { left: 100%; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
