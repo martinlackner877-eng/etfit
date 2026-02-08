@@ -17,9 +17,42 @@
 
     <p class="curtain-sub">
       Wir schmieden gerade das ultimative Gym-Erlebnis.<br>
-      Stay focused.
+      Trag dich ein und erfahre als Erster, wenn die Tore öffnen.
     </p>
 
+    <div class="launch-notify">
+
+      <form
+        *ngIf="!isSubmitted"
+        [formGroup]="newsletterForm"
+        (ngSubmit)="onNewsletterSubmit()"
+        class="notify-form">
+
+        <div class="sr-only">
+          <input formControlName="bot-field" tabindex="-1">
+        </div>
+
+        <div class="input-group">
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Deine E-Mail Adresse"
+            required>
+
+          <button type="submit" [disabled]="newsletterForm.invalid">
+            BENACHRICHTIGEN
+          </button>
+        </div>
+
+        <p class="error-msg" *ngIf="isError">Fehler beim Eintragen. Versuch es später.</p>
+      </form>
+
+      <div class="success-msg" *ngIf="isSubmitted">
+        <span class="check-icon">✓</span>
+        <p>Du stehst auf der Liste. Wir melden uns!</p>
+      </div>
+
+    </div>
     <div class="loading-bar-container">
       <div class="loading-bar"></div>
     </div>

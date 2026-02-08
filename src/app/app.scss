@@ -355,3 +355,116 @@ footer a:hover {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ... dein bestehender Code ... */
+
+/* --- NEWSLETTER STYLES --- */
+.launch-notify {
+  margin-bottom: 3rem;
+  min-height: 80px; /* Platzhalter damit nichts springt */
+}
+
+.notify-form .input-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  max-width: 500px;
+  margin: 0 auto;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
+}
+
+.notify-form input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem 1.5rem;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-color: #ED440D;
+    box-shadow: 0 0 15px rgba(237, 68, 13, 0.2);
+  }
+}
+
+.notify-form button {
+  background: #ED440D;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-family: 'Teko', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: white;
+    color: #ED440D;
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.success-msg {
+  color: #ED440D;
+  font-family: 'Teko', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  animation: fadeIn 0.5s ease-out;
+
+  .check-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.error-msg {
+  color: #ff4444;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+/* Helper für Screenreader (Honeypot) */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
