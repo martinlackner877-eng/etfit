@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnDestroy, NgZone} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -17,11 +17,17 @@ export class MembershipComponent implements AfterViewInit, OnDestroy {
 
   private tl: gsap.core.Timeline | undefined;
 
+
+  constructor(private ngZone: NgZone) {} // <--- NgZone
+
+
   ngAfterViewInit(): void {
-    // Längerer Timeout (500ms), um sicher zu sein, dass Angular fertig ist
-    setTimeout(() => {
-      this.initScrollAnimation();
-    }, 500);
+    this.ngZone.runOutsideAngular(() => {
+      // Längerer Timeout (500ms), um sicher zu sein, dass Angular fertig ist
+      setTimeout(() => {
+        this.initScrollAnimation();
+      }, 500);
+    });
   }
 
   ngOnDestroy(): void {

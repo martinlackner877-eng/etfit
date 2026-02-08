@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HeroComponent } from './hero';
+import { CookieBanner } from './cookie-banner';
 
-describe('Hero', () => {
-  let component: HeroComponent;
-  let fixture: ComponentFixture<HeroComponent>;
+describe('CookieBanner', () => {
+  let component: CookieBanner;
+  let fixture: ComponentFixture<CookieBanner>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeroComponent]
+      imports: [CookieBanner]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HeroComponent);
+    fixture = TestBed.createComponent(CookieBanner);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

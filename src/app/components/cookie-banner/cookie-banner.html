@@ -1,0 +1,33 @@
+<div class="cookie-backdrop" *ngIf="isVisible">
+  <div class="cookie-modal">
+
+    <div class="modal-header">
+      <h3 class="headline">DATEN KONTROLLE</h3>
+      <div class="accent-line"></div>
+    </div>
+
+    <div class="modal-body">
+      <p>
+        Wir nutzen Tracking-Technologien (Google Analytics & Clarity), um die Performance dieser Seite zu analysieren – genau wie du deine Performance im Gym trackst.
+        <br><br>
+        Deine Daten helfen uns, das Erlebnis zu optimieren. Deine Entscheidung.
+      </p>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-accept" (click)="acceptAll()">
+        ALLES AKZEPTIEREN
+      </button>
+      <button class="btn-reject" (click)="rejectAll()">
+        NUR ESSENZIELLE
+      </button>
+    </div>
+
+    <div class="modal-footer">
+      <a routerLink="/datenschutz">Datenschutz</a>
+      <span class="separator">|</span>
+      <a routerLink="/impressum">Impressum</a>
+    </div>
+
+  </div>
+</div>

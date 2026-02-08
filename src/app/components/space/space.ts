@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnDestroy, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -20,13 +20,14 @@ export class SpaceComponent implements AfterViewInit, OnDestroy {
   // Canvas Referenz ist WEG
 
   private tl: gsap.core.Timeline | undefined;
-
-  ngAfterViewInit(): void {
+constructor(private ngZone: NgZone) {} // <--- NgZone
+ngAfterViewInit(): void {
+  this.ngZone.runOutsideAngular(() => {
     setTimeout(() => {
-      // Kein initParticles() mehr
-      this.initSpaceAnimation();
-    }, 100);
-  }
+      this.initSpaceAnimation(); // bzw. initScrollAnimation()
+    }, 100); // Timeout kann sogar kürzer sein (z.B. 10ms), da wir eh ausserhalb sind
+  });
+}
 
   ngOnDestroy(): void {
     if (this.tl) this.tl.kill();

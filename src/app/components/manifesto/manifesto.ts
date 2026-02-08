@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy, NgZone } from '@angular/core';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
@@ -17,15 +17,17 @@ export class ManifestoComponent implements AfterViewInit, OnDestroy {
   private particles: any[] = [];
   private animationFrameId: number = 0;
   private ctx!: CanvasRenderingContext2D | null;
+  constructor(private ngZone: NgZone) {}
 
-  ngAfterViewInit(): void {
-    // WICHTIG: Kurze Verzögerung, damit das Layout steht
-    setTimeout(() => {
-      this.initScrollAnimation();
-      this.initParticles();
-    }, 100);
+ngAfterViewInit(): void {
+    // Alles in die Zone
+    this.ngZone.runOutsideAngular(() => {
+        setTimeout(() => {
+          this.initScrollAnimation();
+          this.initParticles();
+        }, 100);
+    });
   }
-
   ngOnDestroy(): void {
     cancelAnimationFrame(this.animationFrameId);
     ScrollTrigger.getAll().forEach(t => t.kill());
@@ -107,15 +109,15 @@ export class ManifestoComponent implements AfterViewInit, OnDestroy {
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         // Heißes Orange/Gelb
         ctx.fillStyle = `rgba(255, 140, 0, ${this.opacity})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = "rgba(237, 68, 13, 0.8)";
+       // ctx.shadowBlur = 8; CPU and GPU and RAM Killer, daher raus oder stark reduzieren
+       // ctx.shadowColor = "rgba(237, 68, 13, 0.8)";
         ctx.fill();
-        ctx.shadowBlur = 0; // Reset für Performance
+       // ctx.shadowBlur = 0; // Reset für Performance
       }
     }
 
     // Partikel erstellen
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 30; i++) {
       this.particles.push(new Spark(canvas.width, canvas.height));
     }
 

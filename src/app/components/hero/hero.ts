@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnDestroy, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -16,22 +16,35 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
   // Referenz zum Canvas holen
   @ViewChild('particleCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('bgVideo') videoRef!: ElementRef<HTMLVideoElement>;
 
   private animationFrameId: number = 0;
+  private ctx: CanvasRenderingContext2D | null = null;
+
+  // NgZone injizieren
+  constructor(private ngZone: NgZone) {}
 
   ngAfterViewInit(): void {
-    this.animateHeroLoad();
-    this.animateHeroScroll();
-    this.initParticles();
-  }
 
-  ngOnDestroy(): void {
-    // Animation stoppen wenn Komponente zerstört wird
+    const video = this.videoRef.nativeElement;
+    video.muted = true; // WICHTIG: Per Code stummschalten, HTML reicht oft nicht!
+    video.play().catch(err => {
+      console.log('Autoplay wurde blockiert (z.B. Low Power Mode):', err);
+    });
+    // Alles was Animation ist, raus aus der Zone!
+    this.ngZone.runOutsideAngular(() => {
+      this.animateHeroLoad();
+      this.animateHeroScroll();
+      this.initParticles();
+    });
+  }
+ngOnDestroy(): void {
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
     }
+    // Wichtig: ScrollTrigger aufräumen
+    ScrollTrigger.getAll().forEach(t => t.kill());
   }
-
   // ========== EXISTING GSAP LOGIC ==========
   animateHeroLoad(): void {
     gsap.fromTo('.hero-background',
@@ -65,22 +78,16 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
         start: 'top top',
         end: 'bottom bottom',
         scrub: 1,
-        onUpdate: (self) => {
-          gsap.to('.hero-background', {
-            y: self.getVelocity() * -0.3,
-            overwrite: false,
-            duration: 0.5
-          });
-        }
-      }
+      },
+      y: (i, target) => -window.innerHeight * 0.3// Parallax Effekt: 20% der Viewport-Höhe nach oben
     });
   }
 
   // ========== NEU: PARTIKEL LOGIK ==========
   private initParticles() {
     const canvas = this.canvasRef.nativeElement;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    this.ctx = canvas.getContext('2d', {alpha: true });
+    if (!this.ctx) return;
 
     // Canvas Größe setzen
     const resizeCanvas = () => {
@@ -91,70 +98,66 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     resizeCanvas();
 
     class Particle {
-      x: number;
+   x: number;
       y: number;
       size: number;
       speedY: number;
       opacity: number;
+      canvasHeight: number;
+      canvasWidth: number;
 
-      constructor() {
-        // Startet irgendwo entlang des Lichtstrahls (Mitte des Screens)
-        // x = Mitte +/- 20px (damit sie aus dem Strahl kommen)
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height; // Zufällige Höhe beim Start
-        this.size = Math.random() * 2 + 0.5; // Größe
-        this.speedY = Math.random() * 1 + 0.2; // Langsames Aufsteigen
-        this.opacity = Math.random() * 0.6 + 0.1; // Subtilere Transparenz
+      constructor(w: number, h: number) {
+        this.canvasWidth = w;
+        this.canvasHeight = h;
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedY = Math.random() * 1 + 0.2;
+        this.opacity = Math.random() * 0.6 + 0.1;
       }
 
       update() {
-this.y -= this.speedY; // Nach oben bewegen
+        this.y -= this.speedY;
+        this.x += Math.sin(this.y * 0.01) * 0.5; // Weniger Sinus-Berechnung
+        this.opacity -= 0.003;
 
-        // Optional: Leichtes seitliches Driften für mehr Natürlichkeit
-        this.x += Math.sin(this.y * 0.01) * 0.9;
-
-        this.opacity -= 0.003; // Sehr langsames Verblassen
-
-        // Reset wenn unsichtbar oder oben raus
         if (this.opacity <= 0 || this.y + this.size < 0) {
-          this.y = canvas.height + 10; // Neustart knapp unter dem Bildschirm
-          // ÄNDERUNG: Auch beim Reset zufällige X-Position über volle Breite
-          this.x = Math.random() * canvas.width;
+          this.y = this.canvasHeight + 10;
+          this.x = Math.random() * this.canvasWidth;
           this.opacity = Math.random() * 0.6 + 0.7;
           this.speedY = Math.random() * 1.5 + 0.8;
         }
       }
 
-      draw() {
-    if (!ctx) return;
+      draw(ctx: CanvasRenderingContext2D) {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        // Dein Orange (#ED440D)
         ctx.fillStyle = `rgba(237, 68, 13, ${this.opacity})`;
-
-        // Leichter Glow-Effekt für die Partikel
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = 'rgba(237, 68, 13, 0.5)';
+        // ShadowBlur ist SEHR teuer -> Nur bei wenigen oder gar nicht nutzen
+        // ctx.shadowBlur = 8; <--- Performance Killer Nr. 1, raus damit oder reduzieren
         ctx.fill();
-        // Shadow resetten für Performance
-        ctx.shadowBlur = 0;
       }
     }
 
-    // Wir erstellen 60 Partikel
+    // Reduziere Partikelanzahl mobil drastisch
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 30 : 100; // 560 waren VIEL zu viele!
+
     const particles: Particle[] = [];
-    for (let i = 0; i < 560; i++) {
-      particles.push(new Particle());
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle(canvas.width, canvas.height));
     }
 
     const animate = () => {
-      if (!ctx) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-ctx.globalCompositeOperation = 'lighter';
-      // Partikel zeichnen
+      if (!this.ctx) return;
+      this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Global Composite Operation nur einmal setzen
+      this.ctx.globalCompositeOperation = 'lighter';
+
       particles.forEach(p => {
         p.update();
-        p.draw();
+        p.draw(this.ctx!);
       });
 
       this.animationFrameId = requestAnimationFrame(animate);
