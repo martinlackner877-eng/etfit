@@ -246,29 +246,85 @@ footer a:hover {
 
 /* --- COMING SOON VORHANG --- */
 .maintenance-curtain {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  /* Höher als Cookie Banner (9999) und Navbar (100) */
-  z-index: 100000;
-  background-color: #0a0a0a;
-  background-image:
-    radial-gradient(circle at center, rgba(30, 30, 30, 1) 0%, #000000 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-
-  /* Verhindert Scrollen der Seite dahinter */
-  overscroll-behavior: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+z-index: 1000000;
+background-color: #0a0a0a;
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+padding: 2rem;
+overflow: hidden;
+overscroll-behavior: none;
 }
 
-.curtain-content {
-  max-width: 600px;
+.curtain-bg-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(237,68,13,0.2) 0%, rgba(10,10,10,0.95) 60%, #000000 100%);
+  background-size: 150% 150%;
+  background-position: center;
+  animation: corePulse 4s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.embers-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+
+}
+/* NEU: Container für Funken */
+.embers-container {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 1;
+}
+
+/* NEU: Die einzelnen Funken */
+.ember {
+  position: absolute;
+  bottom: -5%; /* Starten unterhalb des Screens */
+  width: 3px; height: 3px;
+  background-color: #ED440D;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(237, 68, 13, 0.8);
+  opacity: 0;
+  animation: riseUp 5s infinite linear;
+}
+
+/* Zufällige Positionen und Timings für die 7 Funken */
+.ember:nth-child(1) { left: 10%; animation-duration: 6s; animation-delay: 0s; }
+.ember:nth-child(2) { left: 25%; animation-duration: 5.5s; animation-delay: 1s; width: 4px; height: 4px; }
+.ember:nth-child(3) { left: 40%; animation-duration: 7s; animation-delay: 2.5s; }
+.ember:nth-child(4) { left: 55%; animation-duration: 6.5s; animation-delay: 0.5s; width: 5px; height: 5px; }
+.ember:nth-child(5) { left: 70%; animation-duration: 5s; animation-delay: 3s; }
+.ember:nth-child(6) { left: 85%; animation-duration: 6.2s; animation-delay: 1.5s; width: 4px; height: 4px; }
+.ember:nth-child(7) { left: 50%; animation-duration: 4.5s; animation-delay: 4s; }
+
+
+
+
+
+
+
+
+.curtain-content {
+  max-width: 600px; width: 100%;
+  /* Content muss über den Effekten liegen */
+  position: relative; z-index: 5; 
   animation: fadeIn 1s ease-out;
 }
 
@@ -355,6 +411,19 @@ footer a:hover {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
+/* Das Pulsieren des Hintergrunds */
+@keyframes corePulse {
+  0% { background-size: 140% 140%; opacity: 0.7; }
+  100% { background-size: 160% 160%; opacity: 1; }
+}
+
+/* Das Aufsteigen der Funken */
+@keyframes riseUp {
+  0% { opacity: 0; transform: translateY(0) scale(0.5); }
+  20% { opacity: 1; }
+  80% { opacity: 0.8; }
+  100% { opacity: 0; transform: translateY(-110vh) scale(1); } /* Steigen bis ganz nach oben */
+}
 
 
 
@@ -372,12 +441,6 @@ footer a:hover {
 
 
 
-
-
-
-
-
-/* ... dein bestehender Code ... */
 
 /* --- NEWSLETTER STYLES --- */
 .launch-notify {
