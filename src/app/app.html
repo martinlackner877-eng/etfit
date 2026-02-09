@@ -3,21 +3,20 @@
 <app-footer></app-footer>
 
 <app-cookie-banner></app-cookie-banner>
+
 <div class="maintenance-curtain">
+  <div class="curtain-bg-pulse"></div>
+  <div class="curtain-noise"></div>
 
-<div class="curtain-bg-pulse"></div>
-<div class="curtain-noise"></div>
-
-<div class="embers-container">
-  <div class="ember"></div>
-  <div class="ember"></div>
-  <div class="ember"></div>
-  <div class="ember"></div>
-  <div class="ember"></div>
-  <div class="ember"></div>
-  <div class="ember"></div>
-</div>
-
+  <div class="embers-container">
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+    <div class="ember"></div>
+  </div>
 
   <div class="curtain-content">
     <div class="status-line">
@@ -31,43 +30,45 @@
     </h1>
 
     <p class="curtain-sub">
-     Hier entsteht etwas Neues.<br>Ab Anfang März wird gebaut, und parallel arbeiten wir im Hintergrund an allem, was dein Erlebnis rund macht.<br> Der Schweiß rinnt schon jetzt , auf der Baustelle und am Bildschirm.
-<br>Melde dich an und sei beim Opening als Erster informiert.
+      Hier entsteht etwas Neues.<br>Ab Anfang März wird gebaut, und parallel arbeiten wir im Hintergrund an allem, was dein Erlebnis rund macht.<br> Der Schweiß rinnt schon jetzt, auf der Baustelle und am Bildschirm.
+      <br>Melde dich an und sei beim Opening als Erster informiert.
     </p>
 
-    <div class="launch-notify">
+<div class="launch-notify">
 
-      <form
-        *ngIf="!isSubmitted"
-        [formGroup]="newsletterForm"
-        (ngSubmit)="onNewsletterSubmit()"
-        class="notify-form">
+  <form
+    action="https://d3b19b7a.sibforms.com/serve/MUIFALFg-fA044mAKnZp9N6CCT_NiGJsPvQsuQEGwzSJuws5UuJ9Zf4Ydt8XNPxZyEhX7tYKlJn0o2PsUcNGXa-2QbHcg0Grqv0-TPHF7TERgSKeoPCIJikcUbqM3zV6NyfDEbF9aZXFfzRj18Orf-BLq9bqt6pYHrxKwE0_2vKFTib8Thzmb3Hse36TuS3cQaWIZs5auxNEhgbvEg=="
+    method="POST"
+    ngNoForm
+    class="notify-form">
 
-        <div class="sr-only">
-          <input formControlName="bot-field" tabindex="-1">
-        </div>
+    <input type="text" name="email_address_check" value="" style="display:none">
+    <input type="hidden" name="locale" value="de">
 
-        <div class="input-group">
-          <input
-            type="email"
-            formControlName="email"
-            placeholder="Deine E-Mail Adresse"
-            required>
+    <div class="input-group">
+      <input
+        type="email"
+        name="EMAIL"
+        placeholder="Deine E-Mail Adresse"
+        required
+        autocomplete="email">
 
-          <button type="submit" [disabled]="newsletterForm.invalid">
-            BENACHRICHTIGEN
-          </button>
-        </div>
-
-        <p class="error-msg" *ngIf="isError">Fehler beim Eintragen. Versuch es später.</p>
-      </form>
-
-      <div class="success-msg" *ngIf="isSubmitted">
-        <span class="check-icon">✓</span>
-        <p>Du stehst auf der Liste. Wir melden uns!</p>
-      </div>
-
+      <button type="submit">
+        ZUGANG SICHERN
+      </button>
     </div>
+
+    <div style="margin-top: 15px; font-size: 0.8rem; color: #888; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto;">
+        <label style="display: flex; gap: 10px; align-items: flex-start; cursor: pointer;">
+            <input type="checkbox" name="OPT_IN" value="1" required style="width: auto; margin-top: 3px;">
+            <span>Ich will den Newsletter und akzeptiere die Datenschutzbestimmungen.</span>
+        </label>
+    </div>
+
+  </form>
+
+</div>
+
     <div class="loading-bar-container">
       <div class="loading-bar"></div>
     </div>

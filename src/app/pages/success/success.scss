@@ -1,20 +1,17 @@
 /* --- SETUP --- */
-.thank-you-screen {
+.success-screen {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
   background-color: #0a0a0a;
   display: flex; justify-content: center; align-items: center;
-
-  /* WICHTIG: Muss höher sein als der Vorhang (der hat 100000) */
-  z-index: 200000000 !important;
-
+  z-index: 20000000; /* Muss über dem Vorhang liegen */
   overflow: hidden;
 }
 
-/* --- HINTERGRUND EFFEKTE --- */
+/* --- HINTERGRUND --- */
 .bg-pulse {
   position: absolute; width: 100%; height: 100%;
-  /* Grünlicher Schimmer für "Erfolg" statt Orange */
+  /* GRÜNES Pulsieren */
   background: radial-gradient(circle at center, rgba(50, 205, 50, 0.15) 0%, #0a0a0a 70%);
   animation: pulse 4s infinite alternate;
 }
@@ -46,10 +43,10 @@
 
   svg {
     width: 40px; height: 40px;
-    animation: drawCheck 0.6s 0.4s ease-out forwards;
-    opacity: 0; /* Startet unsichtbar */
+    opacity: 0;
     stroke-dasharray: 100;
     stroke-dashoffset: 100;
+    animation: drawCheck 0.6s 0.4s ease-out forwards;
   }
 }
 
@@ -76,6 +73,7 @@
   line-height: 0.9;
   color: white;
   margin-bottom: 1.5rem;
+  text-transform: uppercase;
 
   .outline {
     color: transparent;
@@ -91,7 +89,7 @@
   margin-bottom: 3rem;
 }
 
-.back-btn {
+.home-btn {
   display: inline-block;
   color: #32cd32;
   font-family: 'Teko', sans-serif;

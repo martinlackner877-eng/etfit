@@ -44,7 +44,7 @@
         </li>
      </ul>
      <div class="info-cta">
-        <a class="cta-button" href="https://www.google.com/maps/search/?api=1&query=Kreuzner+Strasse+537+9710+Feistritz+an+der+Drau" target="_blank" rel="noreferrer">
+        <a class="cta-button" href="https://www.google.com/maps/place/Kreuzner+Str.+537,+9710+Feistritz+an+der+Drau" target="_blank" rel="noreferrer">
            Route planen
         </a>
      </div>
@@ -56,84 +56,63 @@
       <h2 class="card-title">Schreib uns eine Nachricht</h2>
     </div>
 
-    <form
-      class="form-grid"
-      [formGroup]="contactForm"
-      (ngSubmit)="onSubmit()"
-      netlify
-      name="contact">
+<form
+  class="form-grid"
+  ngNoForm
+  action="https://formsubmit.co/office@et-fit.at"
+  method="POST">
 
-      <input type="hidden" name="form-name" value="contact" />
-      <div class="sr-only">
-         <input formControlName="bot-field" tabindex="-1" />
+  <input type="hidden" name="_next" value="https://et-fit.at/success">
+  <input type="hidden" name="_subject" value="Neue Anfrage über ET FIT Website">
+  <input type="text" name="_honey" style="display:none">
+  <input type="hidden" name="_captcha" value="false">
+
+  <div class="field">
+    <label for="contact-name">Name</label>
+    <input
+      id="contact-name"
+      type="text"
+      name="name"
+      placeholder="Dein Name"
+      required>
       </div>
 
-      <div class="field">
-        <label for="contact-name">Name</label>
-        <input
-          id="contact-name"
-          type="text"
-          formControlName="name"
-          placeholder="Dein Name"
-          [class.has-error]="f['name'].invalid && f['name'].touched">
-
-        <div class="error-msg" *ngIf="f['name'].invalid && f['name'].touched">
-           Bitte gib deinen Namen ein (min. 2 Zeichen).
-        </div>
+  <div class="field">
+    <label for="contact-email">E-Mail</label>
+    <input
+      id="contact-email"
+      type="email"
+      name="email"
+      placeholder="name@domain.at"
+      required>
       </div>
 
-      <div class="field">
-        <label for="contact-email">E-Mail</label>
-        <input
-          id="contact-email"
-          type="email"
-          formControlName="email"
-          placeholder="name@domain.at"
-          [class.has-error]="f['email'].invalid && f['email'].touched">
-
-        <div class="error-msg" *ngIf="f['email'].invalid && f['email'].touched">
-            Bitte eine gültige E-Mail Adresse eingeben.
-        </div>
+  <div class="field">
+    <label for="contact-phone">Telefon</label>
+    <input
+      id="contact-phone"
+      type="tel"
+      name="phone"
+      placeholder="Optional">
       </div>
 
-      <div class="field">
-        <label for="contact-phone">Telefon</label>
-        <input
-          id="contact-phone"
-          type="tel"
-          formControlName="phone"
-          placeholder="Optional">
+  <div class="field field-full">
+    <label for="contact-message">Nachricht</label>
+    <textarea
+      id="contact-message"
+      rows="5"
+      name="message"
+      placeholder="Worum geht es?"
+      required></textarea>
       </div>
 
-      <div class="field field-full">
-        <label for="contact-message">Nachricht</label>
-        <textarea
-          id="contact-message"
-          rows="5"
-          formControlName="message"
-          placeholder="Worum geht es?"
-          [class.has-error]="f['message'].invalid && f['message'].touched"></textarea>
-
-        <div class="error-msg" *ngIf="f['message'].invalid && f['message'].touched">
-            Deine Nachricht ist zu kurz.
-        </div>
-      </div>
-
-      <div class="field field-full">
-        <button class="cta-button" type="submit" [disabled]="isSubmitting">
-          {{ isSubmitting ? 'Senden...' : 'Anfrage senden' }}
-        </button>
-
-        <p class="form-note">Wir melden uns in der Regel innerhalb von 24 Stunden.</p>
-
-        <p *ngIf="formSuccess" class="form-status form-status--success">
-          Danke! Deine Nachricht wurde gesendet.
-        </p>
-        <p *ngIf="formError" class="form-status form-status--error">
-          {{ errorMessage }}
-        </p>
-      </div>
-    </form>
+  <div class="field field-full">
+    <button class="cta-button" type="submit">
+      Anfrage senden
+    </button>
+    <p class="form-note">Wir melden uns in der Regel innerhalb von 24 Stunden.</p>
+  </div>
+</form>
   </div>
 </section>
 
@@ -144,7 +123,7 @@
       loading="lazy"
       allowfullscreen
       referrerpolicy="no-referrer-when-downgrade"
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2732.616388484176!2d13.6668!3d46.7025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x477a8f3b0b0b0b0b%3A0x0!2sKreuzner%20Str.%20537%2C%209710%20Feistritz%20an%20der%20Drau!5e0!3m2!1sde!2sat!4v1600000000000!5m2!1sde!2sat">
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2740.756209736868!2d13.6593!3d46.6125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDbCsDM2JzQ1LjAiTiAxM8KwMzknMzMuNSJF!5e0!3m2!1sde!2sat!4v1600000000000!5m2!1sde!2sat">
     </iframe>
   </div>
   <div class="contact-map__overlay">
