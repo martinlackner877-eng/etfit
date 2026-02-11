@@ -1,3 +1,4 @@
+/* --- HERO SECTION --- */
 .contact-hero {
   position: relative;
   padding: 10rem 0 6rem;
@@ -44,6 +45,7 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
+/* --- QUICK LINKS --- */
 .contact-quick {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -80,6 +82,7 @@
   font-weight: 500;
 }
 
+/* --- MAIN CONTENT & CARDS --- */
 .contact-main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -149,6 +152,7 @@
   margin-top: 2rem;
 }
 
+/* --- FORM STYLING --- */
 .form-grid {
   display: grid;
   gap: 1.2rem;
@@ -190,6 +194,7 @@
   grid-column: 1 / -1;
 }
 
+/* --- BUTTONS --- */
 .cta-button {
   display: inline-flex;
   align-items: center;
@@ -213,38 +218,13 @@
   box-shadow: 0 15px 30px rgba(237, 68, 13, 0.4);
 }
 
-.cta-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-  transform: none;
-  box-shadow: none;
-}
-
 .form-note {
   margin-top: 0.75rem;
   color: rgba(255, 255, 255, 0.5);
   font-size: 0.9rem;
 }
 
-.form-status {
-  margin-top: 0.9rem;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
-}
-
-.form-status--success {
-  color: #b6ffdf;
-  border: 1px solid rgba(50, 200, 140, 0.4);
-  background: rgba(20, 60, 40, 0.5);
-}
-
-.form-status--error {
-  color: #ffb3b3;
-  border: 1px solid rgba(220, 90, 90, 0.4);
-  background: rgba(70, 20, 20, 0.5);
-}
-
+/* --- MAP SECTION --- */
 .contact-map {
   position: relative;
   min-height: 360px;
@@ -279,6 +259,7 @@
   margin-top: 0.75rem;
 }
 
+/* --- MEDIA QUERIES --- */
 @media (max-width: 900px) {
   .contact-hero {
     padding-top: 8rem;
@@ -291,15 +272,6 @@
   }
 }
 
-@media (max-width: 600px) {
-  .contact-card {
-    padding: 2rem 1.5rem;
-  }
-
-  .contact-title {
-    letter-spacing: 3px;
-  }
-}
 @media (max-width: 768px) {
   .contact-hero {
     padding: 7rem 0 4rem;
@@ -314,6 +286,17 @@
   }
 }
 
+@media (max-width: 600px) {
+  .contact-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .contact-title {
+    letter-spacing: 3px;
+  }
+}
+
+/* --- UTILS --- */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -325,14 +308,44 @@
   white-space: nowrap;
   border: 0;
 }
-/* Validierungs-Styles */
+
+/* =========================================
+   NEUE STYLES: Validierung & Status
+   (Ersetzt alte Form-Status Styles)
+========================================= */
+
+/* 1. Status Meldungen (Erfolg / Fehler Boxen) */
+.form-status {
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  text-align: center;
+  animation: slideDown 0.4s ease-out;
+}
+
+.form-status--success {
+  background: rgba(46, 204, 113, 0.15); /* Sanftes Grün */
+  border: 1px solid #2ecc71;
+  color: #2ecc71;
+  box-shadow: 0 0 15px rgba(46, 204, 113, 0.1);
+}
+
+.form-status--error {
+  background: rgba(231, 76, 60, 0.15); /* Sanftes Rot */
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+}
+
+/* 2. Rote Rahmen bei falschen Eingaben */
 .field input.has-error,
 .field textarea.has-error {
-  border-color: #ff4444;
+  border-color: #ff4444 !important;
   box-shadow: 0 0 0 1px rgba(255, 68, 68, 0.3);
   animation: shake 0.3s ease-in-out;
 }
 
+/* 3. Fehlermeldung Text (klein unter dem Feld) */
 .error-msg {
   color: #ff4444;
   font-size: 0.8rem;
@@ -341,6 +354,16 @@
   animation: slideDown 0.2s ease-out;
 }
 
+/* 4. Button deaktivieren während des Sendens */
+.cta-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  filter: grayscale(0.5);
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Animationen */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-5px); }
@@ -348,6 +371,6 @@
 }
 
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-5px); }
+    from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }

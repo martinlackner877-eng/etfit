@@ -1,77 +1,67 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http'; // Optional, aber fetch reicht auch
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-contact-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // <--- WICHTIG: ReactiveFormsModule hier rein!
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './contact.html',
   styleUrl: './contact.scss'
 })
 export class ContactPageComponent {
   private fb = inject(FormBuilder);
+  private http = inject(HttpClient);
 
-  // Das Formular-Model definieren
   contactForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
-    phone: [''], // Optional
+    phone: [''],
     message: ['', [Validators.required, Validators.minLength(10)]],
-    'bot-field': [''] // Honeypot für Netlify
+    'bot-field': [''] // Honeypot
   });
 
   isSubmitting = false;
   formSuccess = false;
   formError = false;
-  errorMessage = 'Beim Senden ist etwas schiefgelaufen.';
 
-  get f() { return this.contactForm.controls; } // Helper für HTML Zugriff
+  get f() { return this.contactForm.controls; }
 
-  async onSubmit() {
-    // 1. Validierung prüfen
+  onSubmit() {
     if (this.contactForm.invalid) {
-      this.contactForm.markAllAsTouched(); // Zeigt alle roten Rahmen an
+      this.contactForm.markAllAsTouched();
       return;
     }
 
-    // 2. Honeypot prüfen (Spam Schutz)
+    // Honeypot Check (Spam-Schutz)
     if (this.contactForm.get('bot-field')?.value) {
-      return; // Wenn Bot-Feld ausgefüllt, brich stillschweigend ab
+      return;
     }
 
     this.isSubmitting = true;
     this.formError = false;
     this.formSuccess = false;
 
-    // 3. Daten für Netlify vorbereiten
-    const body = new URLSearchParams();
-    body.set('form-name', 'contact'); // WICHTIG: Der Name aus dem HTML (name="contact")
+    const formData = {
+      name: this.contactForm.value.name,
+      email: this.contactForm.value.email,
+      phone: this.contactForm.value.phone,
+      message: this.contactForm.value.message
+    };
 
-    // Werte aus dem Formular holen
-    Object.keys(this.contactForm.value).forEach(key => {
-      body.set(key, this.contactForm.value[key]);
-    });
-
-    try {
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString()
-      });
-
-      if (response.ok) {
+    // An dein PHP Skript senden
+    this.http.post('https://et-fit.at/mail.php', formData).subscribe({
+      next: () => {
         this.formSuccess = true;
         this.contactForm.reset();
-      } else {
+        this.isSubmitting = false;
+      },
+      error: (error) => {
+        console.error('Fehler beim Senden:', error);
         this.formError = true;
+        this.isSubmitting = false;
       }
-    } catch (error) {
-      console.error(error);
-      this.formError = true;
-    } finally {
-      this.isSubmitting = false;
-    }
+    });
   }
 }

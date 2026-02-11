@@ -56,63 +56,80 @@
       <h2 class="card-title">Schreib uns eine Nachricht</h2>
     </div>
 
+<div *ngIf="formSuccess" class="form-status form-status--success">
+  Nachricht erfolgreich gesendet! Wir melden uns bald.
+</div>
+
+<div *ngIf="formError" class="form-status form-status--error">
+  Das hat nicht geklappt. Bitte versuche es später noch einmal oder schreibe direkt an office@et-fit.at.
+</div>
+
 <form
   class="form-grid"
-  ngNoForm
-  action="https://formsubmit.co/office@et-fit.at"
-  method="POST">
+  [formGroup]="contactForm"
+  (ngSubmit)="onSubmit()">
 
-  <input type="hidden" name="_next" value="https://et-fit.at/success">
-  <input type="hidden" name="_subject" value="Neue Anfrage über ET FIT Website">
-  <input type="text" name="_honey" style="display:none">
-  <input type="hidden" name="_captcha" value="false">
+  <input type="text" formControlName="bot-field" style="display:none" tabindex="-1" autocomplete="off">
 
   <div class="field">
     <label for="contact-name">Name</label>
     <input
       id="contact-name"
       type="text"
-      name="name"
+      formControlName="name"
       placeholder="Dein Name"
-      required>
-      </div>
+      [class.has-error]="f['name'].invalid && f['name'].touched">
+    <div *ngIf="f['name'].invalid && f['name'].touched" class="error-msg">
+       Bitte gib deinen Namen ein.
+    </div>
+  </div>
 
   <div class="field">
     <label for="contact-email">E-Mail</label>
     <input
       id="contact-email"
       type="email"
-      name="email"
+      formControlName="email"
       placeholder="name@domain.at"
-      required>
-      </div>
+      [class.has-error]="f['email'].invalid && f['email'].touched">
+    <div *ngIf="f['email'].invalid && f['email'].touched" class="error-msg">
+       Bitte gib eine gültige E-Mail ein.
+    </div>
+  </div>
 
   <div class="field">
     <label for="contact-phone">Telefon</label>
     <input
       id="contact-phone"
       type="tel"
-      name="phone"
+      formControlName="phone"
       placeholder="Optional">
-      </div>
+  </div>
 
   <div class="field field-full">
     <label for="contact-message">Nachricht</label>
     <textarea
       id="contact-message"
       rows="5"
-      name="message"
+      formControlName="message"
       placeholder="Worum geht es?"
-      required></textarea>
-      </div>
+      [class.has-error]="f['message'].invalid && f['message'].touched"></textarea>
+    <div *ngIf="f['message'].invalid && f['message'].touched" class="error-msg">
+       Deine Nachricht ist zu kurz.
+    </div>
+  </div>
 
   <div class="field field-full">
-    <button class="cta-button" type="submit">
-      Anfrage senden
+    <button class="cta-button" type="submit" [disabled]="isSubmitting">
+      <span *ngIf="!isSubmitting">ANFRAGE SENDEN</span>
+      <span *ngIf="isSubmitting">WIRD GESENDET...</span>
     </button>
     <p class="form-note">Wir melden uns in der Regel innerhalb von 24 Stunden.</p>
   </div>
 </form>
+
+
+
   </div>
 </section>
 
