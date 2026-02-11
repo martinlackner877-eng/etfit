@@ -1,20 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing'; // Wichtig für den "Zurück zur Base" Link
+import { SuccessComponent } from './success'; // Achte auf den Namen der Klasse
 
-import { Success } from './success';
-
-describe('Success', () => {
-  let component: Success;
-  let fixture: ComponentFixture<Success>;
+describe('SuccessComponent', () => {
+  let component: SuccessComponent;
+  let fixture: ComponentFixture<SuccessComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Success]
+      // Wir importieren die Standalone-Komponente und das Router-Testmodul
+      imports: [SuccessComponent, RouterTestingModule]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Success);
+    fixture = TestBed.createComponent(SuccessComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
